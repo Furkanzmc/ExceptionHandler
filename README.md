@@ -3,7 +3,7 @@ This is a class to handle unhandled exceptions in a Windowns application. This i
 
 #How to use
 Don't forget to build the project with debug info.
-With CMake, use `-DCMAKE_BUILD_TYPE=RelWithDebInfo`
+With CMake, use `-DCMAKE_BUILD_TYPE=RelWithDebInfo` or `-DCMAKE_BUILD_TYPE=Debug`
 ```
 #include "ExceptionHandler.h"
 
