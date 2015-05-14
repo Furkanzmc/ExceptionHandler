@@ -1,5 +1,5 @@
 # ExceptionHandler
-This is a class to handle unhandled exceptions in a Windowns application. This is entirely based on [Jerry Coffin's](https://www.elastic.co/downloads/elasticsearch) code. This is just a slightly modified and easier to read version. All credit goes to Jerry Coffin. Thanks Jerry!
+This is a class to handle unhandled exceptions in a Windowns application. This is entirely based on [Jerry Coffin's](http://stackoverflow.com/questions/15372962/in-the-handler-of-setunhandledexceptionfilter-how-to-print-a-stacktrace) code. This is just a slightly modified and easier to read version. All credit goes to Jerry Coffin. Thanks Jerry!
 
 #How to use
 ```
