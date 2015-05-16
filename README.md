@@ -24,6 +24,7 @@ LONG Win32FaultHandler(struct _EXCEPTION_POINTERS *ExInfo)
 ```
 *Output:*
 ```
+Crash Reason: ACCESS VIOLATION
 Walking stack.
 0: main -> c:\users\furkanzmc\sourcetree\matchingjungle\proj.win32\main.cpp(20)
 1: __tmainCRTStartup -> f:\dd\vctools\crt\crtw32\dllstuff\crtexe.c(626)
