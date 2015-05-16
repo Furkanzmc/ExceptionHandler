@@ -40,9 +40,80 @@ void *loadModulesSymbols(HANDLE hProcess, DWORD pid);
 // by the time you do the dump.
 std::string filterCrash(EXCEPTION_POINTERS *ep)
 {
+    std::string crashReason = "";
+
+    switch (ep->ExceptionRecord->ExceptionCode) {
+    case EXCEPTION_ACCESS_VIOLATION:
+        crashReason = "ACCESS VIOLATION";
+        break;
+    case EXCEPTION_DATATYPE_MISALIGNMENT:
+        crashReason = "DATATYPE MISALIGNMENT";
+        break;
+    case EXCEPTION_BREAKPOINT:
+        crashReason = "BREAKPOINT";
+        break;
+    case EXCEPTION_SINGLE_STEP:
+        crashReason = "SINGLE STEP";
+        break;
+    case EXCEPTION_ARRAY_BOUNDS_EXCEEDED:
+        crashReason = "ARRAY BOUNDS EXCEEDED";
+        break;
+    case EXCEPTION_FLT_DENORMAL_OPERAND:
+        crashReason = "FLT DENORMAL OPERAND";
+        break;
+    case EXCEPTION_FLT_DIVIDE_BY_ZERO:
+        crashReason = "FLT DIVIDE BY ZERO";
+        break;
+    case EXCEPTION_FLT_INEXACT_RESULT:
+        crashReason = "FLT INEXACT RESULT";
+        break;
+    case EXCEPTION_FLT_INVALID_OPERATION:
+        crashReason = "FLT INVALID OPERATION";
+        break;
+    case EXCEPTION_FLT_OVERFLOW:
+        crashReason = "FLT OVERFLOW";
+        break;
+    case EXCEPTION_FLT_STACK_CHECK:
+        crashReason = "FLT STACK CHECK";
+        break;
+    case EXCEPTION_FLT_UNDERFLOW:
+        crashReason = "FLT UNDERFLOW";
+        break;
+    case EXCEPTION_INT_DIVIDE_BY_ZERO:
+        crashReason = "INT DIVIDE BY ZERO";
+        break;
+    case EXCEPTION_INT_OVERFLOW:
+        crashReason = "INT OVERFLOW";
+        break;
+    case EXCEPTION_PRIV_INSTRUCTION:
+        crashReason = "PRIV INSTRUCTION";
+        break;
+    case EXCEPTION_IN_PAGE_ERROR:
+        crashReason = "IN PAGE ERROR";
+        break;
+    case EXCEPTION_ILLEGAL_INSTRUCTION:
+        crashReason = "ILLEGAL INSTRUCTION";
+        break;
+    case EXCEPTION_NONCONTINUABLE_EXCEPTION:
+        crashReason = "NONCONTINUABLE EXCEPTION";
+        break;
+    case EXCEPTION_STACK_OVERFLOW:
+        crashReason = "STACK OVERFLOW";
+        break;
+    case EXCEPTION_INVALID_DISPOSITION:
+        crashReason = "INVALID DISPOSITION";
+        break;
+    case EXCEPTION_GUARD_PAGE:
+        crashReason = "GUARD PAGE";
+        break;
+    default:
+        crashReason = "(UNKNOWN)";
+        break;
+    }
+
     HANDLE thread;
     DuplicateHandle(GetCurrentProcess(), GetCurrentThread(), GetCurrentProcess(), &thread, 0, false, DUPLICATE_SAME_ACCESS);
-    std::string errorOutput = "";
+    std::string errorOutput = "Crash Reason: " + crashReason + "\n";
     errorOutput += "Walking stack.\n";
     errorOutput += showStack(thread, *(ep->ContextRecord));
     errorOutput += "\nEnd of stack walk.\n";
@@ -214,4 +285,3 @@ void *loadModulesSymbols(HANDLE process, DWORD pid)
     return modules[0].baseAddress;
 }
 #endif // EXCEPTIONHANDLER
-
