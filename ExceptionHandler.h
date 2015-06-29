@@ -222,8 +222,9 @@ std::string showStack(HANDLE hThread, CONTEXT &c)
     std::string errorOutput = "";
 
     do {
-        if (!StackWalk64(imageType, process, hThread, &stackFrame, &c, NULL, SymFunctionTableAccess64, SymGetModuleBase64, NULL))
+        if (!StackWalk64(imageType, process, hThread, &stackFrame, &c, NULL, SymFunctionTableAccess64, SymGetModuleBase64, NULL)) {
             return false;
+        }
 
         errorOutput += "\n" + std::to_string(frameNumber) + ": ";
         if (stackFrame.AddrPC.Offset != 0) {
@@ -232,8 +233,9 @@ std::string showStack(HANDLE hThread, CONTEXT &c)
             if (SymGetLineFromAddr64(process, stackFrame.AddrPC.Offset, &offsetFromSymbol, &line))
                 errorOutput += std::string(line.FileName) + "(" + std::to_string(line.LineNumber) + ")";
         }
-        else
+        else {
             errorOutput += " (No Symbols: PC == 0)";
+        }
         ++frameNumber;
     }
     while (stackFrame.AddrReturn.Offset != 0);
@@ -285,3 +287,4 @@ void *loadModulesSymbols(HANDLE process, DWORD pid)
     return modules[0].baseAddress;
 }
 #endif // EXCEPTIONHANDLER
+
