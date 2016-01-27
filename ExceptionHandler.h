@@ -1,3 +1,7 @@
+/**
+ * This is a class to handle unhandled exceptions in a Windowns application. For more information on how to use it: https://github.com/Furkanzmc/ExceptionHandler/
+ */
+
 #ifndef EXCEPTIONHANDLER
 #define EXCEPTIONHANDLER
 #include <windows.h>
