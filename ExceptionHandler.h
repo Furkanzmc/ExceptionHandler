@@ -258,17 +258,46 @@ public:
     ModuleData operator()(HMODULE module)
     {
         ModuleData ret;
+#ifdef UNICODE
+        LPWSTR temp;
+#endif //UNICDOE
+#ifndef UNICODE
         char temp[BUFFER_LENGTH];
+#endif //UNICDOE
         MODULEINFO mi;
 
+#ifdef UNICODE
         GetModuleInformation(process, module, &mi, sizeof(mi));
+#endif //UNICODE
+
+#ifndef UNICODE
+        GetModuleInformation(process, module, &mi, sizeof(mi));
+#endif //UNICODE
+
         ret.baseAddress = mi.lpBaseOfDll;
         ret.loadSize = mi.SizeOfImage;
 
+#ifdef UNICODE
+        GetModuleFileNameEx(process, module, temp, sizeof(temp));
+        std::wstring wstr = temp;
+        ret.imageName = std::string(wstr.begin(), wstr.end());
+#endif //UNICODE
+
+#ifndef UNICODE
         GetModuleFileNameEx(process, module, temp, sizeof(temp));
         ret.imageName = temp;
+#endif //UNICODE
+
+#ifdef UNICODE
+        GetModuleBaseName(process, module, temp, sizeof(temp));
+        wstr = temp;
+        ret.moduleName = std::string(wstr.begin(), wstr.end());
+#endif //UNICODE
+
+#ifndef UNICODE
         GetModuleBaseName(process, module, temp, sizeof(temp));
         ret.moduleName = temp;
+#endif //UNICODE
         std::vector<char> img(ret.imageName.begin(), ret.imageName.end());
         std::vector<char> mod(ret.moduleName.begin(), ret.moduleName.end());
         SymLoadModule64(process, 0, &img[0], &mod[0], (DWORD64)ret.baseAddress, ret.loadSize);
