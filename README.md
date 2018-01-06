@@ -1,7 +1,8 @@
 # ExceptionHandler
 This is a class to handle unhandled exceptions in a Windowns application. This is entirely based on [Jerry Coffin's](http://stackoverflow.com/questions/15372962/in-the-handler-of-setunhandledexceptionfilter-how-to-print-a-stacktrace) code. This is just a slightly modified and easier to read version. All credit goes to Jerry Coffin. Thanks Jerry!
 
-#How to use
+# How to use
+
 Don't forget to build the project with debug info.
 With CMake, use `-DCMAKE_BUILD_TYPE=RelWithDebInfo` or `-DCMAKE_BUILD_TYPE=Debug`
 ```
